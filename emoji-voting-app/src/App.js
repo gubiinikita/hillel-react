@@ -18,11 +18,12 @@ class App extends Component {
     this.state = {
       emojiData: savedData || emojis,
       winner: null,
+      isClearing: false,
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.emojiData !== this.state.emojiData) {
+    if (prevState.emojiData !== this.state.emojiData && !this.state.isClearing) {
       localStorage.setItem('emojiVotes', JSON.stringify(this.state.emojiData));
     }
   }
@@ -42,8 +43,13 @@ class App extends Component {
   };
 
   clearResults = () => {
-    this.setState({ emojiData: emojis, winner: null });
-    localStorage.removeItem('emojiVotes');
+    this.setState(
+      { emojiData: emojis, winner: null, isClearing: true },
+      () => {
+        localStorage.removeItem('emojiVotes');
+        this.setState({ isClearing: false });
+      }
+    );
   };
 
   render() {
