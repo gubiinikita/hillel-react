@@ -1,30 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
+
+const TodoItem = ({ todo, onToggle, onDelete }) => (
+  <li className={todo.completed ? 'completed' : ''}>
+    <span onClick={() => onToggle(todo.id)}>{todo.text}</span>
+    <button onClick={() => onDelete(todo.id)}>Delete</button>
+  </li>
+);
+
+const TodoList = ({ todos, onToggle, onDelete }) => (
+  <ul>
+    {todos.map((todo) => (
+      <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onDelete={onDelete} />
+    ))}
+  </ul>
+);
 
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
 
-  const addTodo = (e) => {
+  useEffect(() => {
+    const storedTodos = localStorage.getItem('todos');
+    if (storedTodos) {
+      setTodos(JSON.parse(storedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+
+  const addTodo = useCallback((e) => {
     e.preventDefault();
     if (newTodo.trim()) {
-      setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
+      setTodos((prevTodos) => [
+        ...prevTodos,
+        { id: Date.now(), text: newTodo, completed: false },
+      ]);
       setNewTodo('');
     }
-  };
+  }, [newTodo]);
 
-  const toggleTodo = (id) => {
-    console.log("Toggling todo with id:", id);
-    setTodos(
-      todos.map((todo) =>
+  const toggleTodo = useCallback((id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
-  };
+  }, []);
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+  const deleteTodo = useCallback((id) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  }, []);
 
   return (
     <div className="App">
@@ -38,14 +66,7 @@ const App = () => {
         />
         <button type="submit">Add</button>
       </form>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id} className={todo.completed ? 'completed' : ''}>
-            <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <TodoList todos={todos} onToggle={toggleTodo} onDelete={deleteTodo} />
     </div>
   );
 };
