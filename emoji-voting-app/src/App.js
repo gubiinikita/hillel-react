@@ -17,13 +17,10 @@ const App = () => {
     return savedData ? JSON.parse(savedData) : emojis;
   });
   const [winner, setWinner] = useState(null);
-  const [isClearing, setIsClearing] = useState(false);
 
   useEffect(() => {
-    if (!isClearing) {
-      localStorage.setItem('emojiVotes', JSON.stringify(emojiData));
-    }
-  }, [emojiData, isClearing]);
+    localStorage.setItem('emojiVotes', JSON.stringify(emojiData));
+  }, [emojiData]);
 
   const handleVote = useCallback((id) => {
     setEmojiData((prevData) =>
@@ -40,11 +37,9 @@ const App = () => {
   }, [emojiData]);
 
   const clearResults = useCallback(() => {
-    setIsClearing(true);
     setEmojiData(emojis);
     setWinner(null);
     localStorage.removeItem('emojiVotes');
-    setIsClearing(false);
   }, []);
 
   return (
