@@ -24,3 +24,207 @@ button:hover {
 input[type="checkbox"] {
     margin-right: 10px;
 }
+
+/* Світла тема (за замовчуванням) */
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Темна тема (сіра) */
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --header-background: #f8f9fa;
+    --header-border: #ddd;
+    --button-background: #007bff;
+    --button-hover: #0056b3;
+    --link-color: #333;
+    --link-hover: #007bff;
+}
+
+/* Стилі для темної теми */
+.dark-theme {
+    --background-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --header-background: #2a2a2a;
+    --header-border: #444;
+    --button-background: #bb86fc;
+    --button-hover: #9b59b6;
+    --link-color: #e0e0e0;
+    --link-hover: #bb86fc;
+}
+
+/* Застосування змінних до елементів */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header {
+    background-color: var(--header-background);
+    border-bottom: 1px solid var(--header-border);
+}
+
+.header nav ul li a {
+    color: var(--link-color);
+}
+
+.header nav ul li a:hover {
+    color: var(--link-hover);
+}
+
+button {
+    background-color: var(--button-background);
+    color: white;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+.dark-theme .header {
+    background-color: #2a2a2a;
+    border-bottom: 1px solid #444;
+}
+
+.dark-theme .header nav ul li a {
+    color: #e0e0e0;
+}
+
+.dark-theme .header nav ul li a:hover {
+    color: #bb86fc;
+}
+
+.dark-theme button {
+    background-color: #bb86fc;
+    color: #000000;
+}
+
+.dark-theme button:hover {
+    background-color: #9b59b6;
+}
+
+.header {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+}
+
+.header nav ul {
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.header nav ul li {
+    list-style: none;
+}
+
+.header nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.header nav ul li a:hover {
+    color: #007bff;
+}
+
+.header button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.header button:hover {
+    background-color: #0056b3;
+}
+
+.about, .contacts {
+    padding: 20px;
+}
+
+.about h1, .contacts h1 {
+    margin-bottom: 20px;
+}
+
+.about p, .contacts p {
+    margin-bottom: 10px;
+}
+
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch-label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch-label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.theme-switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .theme-switch-slider {
+    background-color: #bb86fc;
+}
+
+input:checked + .theme-switch-slider:before {
+    transform: translateX(26px);
+}
+
+.theme-switch-slider:after {
+    content: "☀️";
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    transition: opacity 0.3s ease;
+}
+
+input:checked + .theme-switch-slider:after {
+    content: "🌙";
+    left: auto;
+    right: 5px;
+    opacity: 1;
+}

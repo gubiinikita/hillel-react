@@ -12,7 +12,6 @@ const Home = () => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  // Додаємо нове завдання
   const addTodo = useCallback(() => {
     if (inputValue.trim()) {
       setTodos((prev) => [
@@ -23,12 +22,10 @@ const Home = () => {
     }
   }, [inputValue]);
 
-  // Видаляємо завдання
   const removeTodo = useCallback((id) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }, []);
 
-  // Позначаємо завдання як виконане/не виконане
   const toggleTodo = useCallback((id) => {
     setTodos((prev) =>
       prev.map((todo) =>
@@ -46,7 +43,7 @@ const Home = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <button onClick={addTodo}>Додати</button>
+        <button onClick={addTodo}>Add</button>
       </div>
       <ul>
         {todos.map((todo) => (
@@ -76,7 +73,7 @@ const Home = () => {
                 borderRadius: "4px",
               }}
             >
-              Видалити
+              Delete
             </button>
           </li>
         ))}

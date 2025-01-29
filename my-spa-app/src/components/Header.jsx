@@ -11,9 +11,16 @@ const Header = ({ toggleTheme, theme }) => {
           <li><Link to="/contacts">Контакти</Link></li>
         </ul>
       </nav>
-      <button onClick={toggleTheme}>
-        {theme === "light" ? "Темна тема" : "Світла тема"}
-      </button>
+      <div className="theme-toggle">
+        <label className="theme-switch-label">
+          <input
+            type="checkbox"
+            checked={theme === "dark"}
+            onChange={toggleTheme}
+          />
+          <span className="theme-switch-slider"></span>
+        </label>
+      </div>
     </header>
   );
 };
